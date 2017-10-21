@@ -1,0 +1,40 @@
+{
+    "name": "netmosfera/php-parser-tools",
+    "description": "",
+    "keywords": [],
+    "homepage": "https://github.com/Netmosfera/PHPParserTools",
+    "license": "MIT",
+    "authors": [{
+        "name": "Wes",
+        "homepage": "https://github.com/Netmosfera",
+        "role": "Smith"
+    }],
+    "require": {
+        "php": ">=7.2 <8",
+        "nikic/php-parser": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=6 <7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netmosfera\\PHPParserTools\\": "src/"
+        },
+        "files": [
+            "src/contains.inc.php",
+            "src/containsAttribute.inc.php",
+            "src/findClosestAncestor.inc.php",
+            "src/findUnusedAttribute.inc.php",
+            "src/findUnusedVariable.inc.php",
+            "src/removeAttribute.inc.php",
+            "src/resolveParents.inc.php",
+            "src/visitNamespaceChildNodes.inc.php",
+            "src/visitNodes.inc.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netmosfera\\PHPParserToolsTests\\": "tests/"
+        }
+    }
+}
