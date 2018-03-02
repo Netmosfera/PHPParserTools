@@ -11,6 +11,15 @@ use PhpParser\Node\Stmt\Namespace_;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
+/**
+ * @TODOC
+ *
+ * @param           Node[]                                  $nodes                          ``
+ * @TODOC
+ *
+ * @return          Node[]                                                                  ``
+ * @TODOC
+ */
 function adoptOrphanStmts(Array $nodes): Array{
     $hasNamespaces = FALSE;
     $nodes = visitNodes($nodes, function(Node $node) use(&$hasNamespaces){
