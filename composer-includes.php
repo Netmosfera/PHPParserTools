@@ -1,5 +1,6 @@
 <?php
 
+require(__DIR__ . "/src/adoptOrphanStmts.inc.php");
 require(__DIR__ . "/src/contains.inc.php");
 require(__DIR__ . "/src/containsAttribute.inc.php");
 require(__DIR__ . "/src/findClosestAncestor.inc.php");

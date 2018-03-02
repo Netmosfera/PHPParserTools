@@ -68,8 +68,6 @@ class IsIdentifierInUseTest extends TestCase
         self::assertFalse(isIdentifierInUse($type, new Identifier("C"), $nodes));
     }
 
-
-
     function group_data(){
         $concat = [" use X\\X\\X; ", " "];
         $prependInGroup = [
