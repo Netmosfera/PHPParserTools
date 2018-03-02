@@ -11,30 +11,22 @@
     }],
     "require": {
         "php": ">=7.2 <8",
-        "nikic/php-parser": "dev-master"
+        "nikic/php-parser": ">=4 <5"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=6 <7"
+        "phpunit/phpunit": ">=6 <7",
+        "php-tool-bucket/incload": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "Netmosfera\\PHPParserTools\\": "src/"
         },
-        "files": [
-            "src/contains.inc.php",
-            "src/containsAttribute.inc.php",
-            "src/findClosestAncestor.inc.php",
-            "src/findUnusedAttribute.inc.php",
-            "src/findUnusedVariable.inc.php",
-            "src/removeAttribute.inc.php",
-            "src/resolveParents.inc.php",
-            "src/visitNamespaceChildNodes.inc.php",
-            "src/visitNodes.inc.php"
-        ]
+        "files": ["composer-includes.php"]
     },
     "autoload-dev": {
         "psr-4": {
             "Netmosfera\\PHPParserToolsTests\\": "tests/"
-        }
+        },
+        "files": ["composer-includes-dev.php"]
     }
 }
