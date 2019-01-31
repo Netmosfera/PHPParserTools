@@ -3,9 +3,9 @@
 namespace Netmosfera\PHPParserTools\Names;
 
 use PhpParser\Node\Stmt\Namespace_;
-use function basename;
 use function Netmosfera\PHPParserTools\isValidGlobalSymbolType;
 use function Netmosfera\PHPParserTools\Names\FQNToAndFromBaseIdentifierConversionInUses\FQNOfBaseIdentifierInUses;
+use function strrpos;
 
 function baseIdentifierOfFQNOrNumberIt(
     Namespace_ $namespace,
@@ -28,12 +28,15 @@ function baseIdentifierOfFQNOrNumberIt(
 
     $newBaseIdentifier = NULL;
     $count = 2;
+    $lastSeparator = strrpos($FQN, "\\");
+    $lastSeparator = $lastSeparator === FALSE ? 0 : $lastSeparator;
+    $baseName = substr($FQN, $lastSeparator + 1);
 
     while(TRUE){
         if($newBaseIdentifier === NULL){
-            $newBaseIdentifier = basename($FQN);
+            $newBaseIdentifier = $baseName;
         }else{
-            $newBaseIdentifier = basename($FQN) . $count++;
+            $newBaseIdentifier = $baseName . $count++;
         }
 
         // 1- there is no pre-existing `use function foo` or `use function bar as foo`
