@@ -1,14 +1,11 @@
-<?php declare(strict_types = 1); // atom
+<?php declare(strict_types = 1);
 
 namespace Netmosfera\PHPParserTools;
 
-//[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
-
 use PhpParser\Node;
-use PhpParser\NodeTraverser;
 use PhpParser\Node\Expr\Variable;
-
-//[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+use PhpParser\NodeTraverser;
+use function Netmosfera\PHPParserTools\Nodes\visitNodes;
 
 function findUnusedVariable(Array $nodes, String $variableName = "var"){
     $variableNameSuffix = "";

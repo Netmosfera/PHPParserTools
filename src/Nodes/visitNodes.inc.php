@@ -1,32 +1,32 @@
-<?php declare(strict_types = 1); // atom
+<?php declare(strict_types = 1);
 
-namespace Netmosfera\PHPParserTools;
-
-//[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+namespace Netmosfera\PHPParserTools\Nodes;
 
 use Closure;
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 
-//[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
-
 /**
  * @TODOC
  *
- * @param           Node[]                                  $nodes                          `Array<Int, Node>`
- * @TODOC
+ * @param           Node[] $nodes
+ * `Array<Int, Node>`
  *
- * @param           Closure|NULL                            $enterNode                      `Closure|NULL`
- * @TODOC
+ * @param           Closure|NULL $enterNode
+ * `Closure1<Node, NULL|Node|Array<Int, Node>>|NULL`
  *
- * @param           Closure|NULL                            $leaveNode                      `Closure|NULL`
- * @TODOC
+ * @param           Closure|NULL $leaveNode
+ * `Closure1<Node, NULL|Node|Array<Int, Node>>|NULL`
  *
- * @return          Node[]                                                                  `Array<Int, Node>`
- * @TODOC
+ * @return          Node[]
+ * `Array<Int, Node>`
  */
-function visitNodes(Array $nodes, ?Closure $enterNode = NULL, ?Closure $leaveNode = NULL): Array{
+function visitNodes(
+    Array $nodes,
+    ?Closure $enterNode = NULL,
+    ?Closure $leaveNode = NULL
+): array{
     $enterNode = $enterNode ?? function(){};
     $leaveNode = $leaveNode ?? function(){};
     $traverser = new NodeTraverser();

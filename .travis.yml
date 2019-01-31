@@ -1,11 +1,45 @@
+sudo: required
+
 language: php
 
-php:
-- "7.2"
+matrix:
+  include:
+    - name: '[UNIT] PHP With Locked Dependencies'
+      php: '7.2'
+
+    - name: '[UNIT] PHP With Lowest Dependencies'
+      php: '7.2'
+      env: dependencies=lowest
+
+    - name: '[UNIT] PHP With Highest Dependencies'
+      php: '7.2'
+      env: dependencies=highest
+
+    - name: '[UNIT] PHP Nightly With Locked Dependencies'
+      php: nightly
+
+    - name: '[UNIT] PHP Nightly With Highest Dependencies'
+      php: nightly
+      env: dependencies=lowest
+
+    - name: '[UNIT] PHP Nightly With Lowest Dependencies'
+      php: nightly
+      env: dependencies=highest
+
+install:
+- wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar
+- chmod 777 php-coveralls.phar
+- mkdir -p build/logs
+- chmod 777 build/logs
 
 before_script:
-  - composer self-update
-  - composer install
+  - travis_retry composer self-update
+  - if [ -z "$dependencies" ];          then travis_retry composer install; fi;
+  - if [ "$dependencies" = "lowest" ];  then travis_retry composer update --prefer-lowest -n; fi;
+  - if [ "$dependencies" = "highest" ]; then travis_retry composer update -n; fi;
 
 script:
-  - phpunit --configuration phpunit.xml --coverage-text --coverage-clover=coverage.clover
+  - phpdbg -qrr vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
+
+after_success:
+  - travis_retry php php-coveralls.phar
