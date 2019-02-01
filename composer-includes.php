@@ -4,6 +4,7 @@ require(__DIR__ . "/src/isValidGlobalSymbolType.inc.php");
 require(__DIR__ . "/src/Attributes/containsAttribute.inc.php");
 require(__DIR__ . "/src/Attributes/newAttribute.inc.php");
 require(__DIR__ . "/src/Attributes/removeAttribute.inc.php");
+require(__DIR__ . "/src/CodeGeneration/tools.inc.php");
 require(__DIR__ . "/src/Misc/moveOrphanNodesToRootNS.inc.php");
 require(__DIR__ . "/src/Names/baseIdentifierOfFQN.inc.php");
 require(__DIR__ . "/src/Names/baseIdentifierOfFQNOrNumberIt.inc.php");
