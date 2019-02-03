@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use function Netmosfera\PHPParserTools\Names\baseIdentifierOfFQN;
 use function Netmosfera\PHPParserToolsTests\parse;
 
-class baseIdentifierOfFQN extends TestCase
+class baseIdentifierOfFQNTest extends TestCase
 {
     public function test_existing_identifier_in_uses(){
         $namespace = parse("<?php
