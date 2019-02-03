@@ -23,7 +23,7 @@ function false_(){
 }
 
 function bool_(Bool $bool): ConstFetch{
-    return new ConstFetch(new FullyQualified($bool ? "TRUE" : "FALSE"));
+    return new ConstFetch(new Name($bool ? "TRUE" : "FALSE"));
 }
 
 function arg(Expr $arg, Bool $byRef = FALSE, Bool $unpack = FALSE): Arg{
