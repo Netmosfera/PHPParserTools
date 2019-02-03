@@ -8,6 +8,7 @@ require(__DIR__ . "/src/CodeGeneration/tools.inc.php");
 require(__DIR__ . "/src/Misc/moveOrphanNodesToRootNS.inc.php");
 require(__DIR__ . "/src/Names/baseIdentifierOfFQN.inc.php");
 require(__DIR__ . "/src/Names/baseIdentifierOfFQNOrNumberIt.inc.php");
+require(__DIR__ . "/src/Names/FQNOfBaseIdentifier.inc.php");
 require(__DIR__ . "/src/Names/isBaseIdentifierActuallyInUse.inc.php");
 require(__DIR__ . "/src/Names/isImplicitlyRelativeName.inc.php");
 require(__DIR__ . "/src/Names/normalizeFQNForComparison.inc.php");
