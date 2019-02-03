@@ -9,26 +9,26 @@ use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Name\Relative;
 use PhpParser\Node\Stmt\Use_;
 use PHPUnit\Framework\TestCase;
-use function Netmosfera\PHPParserTools\Names\resolveName;
+use function Netmosfera\PHPParserTools\Names\FQNOfName;
 use function Netmosfera\PHPParserToolsTests\parse;
 
-class resolveNameTest extends TestCase
+class FQNOfNameTest extends TestCase
 {
     public function test_fully_qualified(){
         $namespace = parse("<?php namespace X; ")[0];
-        $FQN = resolveName($namespace, Use_::TYPE_NORMAL, new FullyQualified("Foo\\Bar"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_NORMAL, new FullyQualified("Foo\\Bar"));
         self::assertSame("Foo\\Bar", $FQN);
     }
 
     public function test_relative(){
         $namespace = parse("<?php namespace X; ")[0];
-        $FQN = resolveName($namespace, Use_::TYPE_NORMAL, new Relative("Foo\\Bar"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_NORMAL, new Relative("Foo\\Bar"));
         self::assertSame("X\\Foo\\Bar", $FQN);
     }
 
     public function test_identifier_is_converted_to_name(){
         $namespace = parse("<?php namespace X\\Y\\Z; ")[0];
-        $FQN = resolveName($namespace, Use_::TYPE_FUNCTION, new Identifier("poo"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_FUNCTION, new Identifier("poo"));
         self::assertSame("X\\Y\\Z\\poo", $FQN);
     }
 
@@ -37,7 +37,7 @@ class resolveNameTest extends TestCase
             namespace A\\B\\C;
         ")[0];
 
-        $FQN = resolveName($namespace, Use_::TYPE_FUNCTION, new Name("D\\E\\callMe"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_FUNCTION, new Name("D\\E\\callMe"));
 
         self::assertSame("A\\B\\C\\D\\E\\callMe", $FQN);
     }
@@ -48,7 +48,7 @@ class resolveNameTest extends TestCase
             use X\\Y\\Z\\D;
         ")[0];
 
-        $FQN = resolveName($namespace, Use_::TYPE_CONSTANT, new Name("D\\E\\CONSTANT"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_CONSTANT, new Name("D\\E\\CONSTANT"));
 
         self::assertSame("X\\Y\\Z\\D\\E\\CONSTANT", $FQN);
     }
@@ -59,7 +59,7 @@ class resolveNameTest extends TestCase
             use function X\\Y\\Z\\D;
         ")[0];
 
-        $FQN = resolveName($namespace, Use_::TYPE_NORMAL, new Name("D\\E\\F"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_NORMAL, new Name("D\\E\\F"));
 
         self::assertSame("A\\B\\C\\D\\E\\F", $FQN);
     }
@@ -70,7 +70,7 @@ class resolveNameTest extends TestCase
             use function X\\Y\\Z\\D;
         ")[0];
 
-        $FQN = resolveName($namespace, Use_::TYPE_NORMAL, new Name("D"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_NORMAL, new Name("D"));
 
         self::assertSame("A\\B\\C\\D", $FQN);
     }
@@ -81,7 +81,7 @@ class resolveNameTest extends TestCase
             use X\\Y\\Z\\D;
         ")[0];
 
-        $FQN = resolveName($namespace, Use_::TYPE_NORMAL, new Name("D"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_NORMAL, new Name("D"));
 
         self::assertSame("X\\Y\\Z\\D", $FQN);
     }
@@ -92,7 +92,7 @@ class resolveNameTest extends TestCase
             use X\\Y\\Z\\D;
         ")[0];
 
-        $FQN = resolveName($namespace, Use_::TYPE_FUNCTION, new Name("D"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_FUNCTION, new Name("D"));
 
         self::assertSame("A\\B\\C\\D", $FQN);
     }
@@ -103,7 +103,7 @@ class resolveNameTest extends TestCase
             use function X\\Y\\Z\\D;
         ")[0];
 
-        $FQN = resolveName($namespace, Use_::TYPE_FUNCTION, new Name("D"));
+        $FQN = FQNOfName($namespace, Use_::TYPE_FUNCTION, new Name("D"));
 
         self::assertSame("X\\Y\\Z\\D", $FQN);
     }
@@ -121,37 +121,37 @@ class resolveNameTest extends TestCase
     /** @dataProvider builtin_classes */
     public function test_builtin_class(String $builtinType){
         $namespace = parse("<?php namespace X; ")[0];
-        $FQN = resolveName($namespace, Use_::TYPE_NORMAL, new Name($builtinType));
+        $FQN = FQNOfName($namespace, Use_::TYPE_NORMAL, new Name($builtinType));
         self::assertSame($builtinType, $FQN);
     }
 
     public function test_self_available(){
         $namespace = parse("<?php namespace X; ")[0];
-        $FQN = resolveName($namespace, Use_::TYPE_NORMAL, new Name("self"), "a\\b\\c");
+        $FQN = FQNOfName($namespace, Use_::TYPE_NORMAL, new Name("self"), "a\\b\\c");
         self::assertSame("a\\b\\c", $FQN);
     }
 
     public function test_self_unavailable(){
         $this->expectException(Error::CLASS);
         $namespace = parse("<?php namespace X; ")[0];
-        resolveName($namespace, Use_::TYPE_NORMAL, new Name("self"));
+        FQNOfName($namespace, Use_::TYPE_NORMAL, new Name("self"));
     }
 
     public function test_static_available(){
         $namespace = parse("<?php namespace X; ")[0];
-        $FQN = resolveName($namespace, Use_::TYPE_NORMAL, new Name("static"), NULL, "a\\b\\c");
+        $FQN = FQNOfName($namespace, Use_::TYPE_NORMAL, new Name("static"), NULL, "a\\b\\c");
         self::assertSame("a\\b\\c", $FQN);
     }
 
     public function test_static_unavailable(){
         $this->expectException(Error::CLASS);
         $namespace = parse("<?php namespace X; ")[0];
-        resolveName($namespace, Use_::TYPE_NORMAL, new Name("static"));
+        FQNOfName($namespace, Use_::TYPE_NORMAL, new Name("static"));
     }
 
     public function test_func_and_const_invalid_identifiers(){
         $this->expectException(Error::CLASS);
         $namespace = parse("<?php namespace X; ")[0];
-        resolveName($namespace, Use_::TYPE_FUNCTION, new Name("static"));
+        FQNOfName($namespace, Use_::TYPE_FUNCTION, new Name("static"));
     }
 }

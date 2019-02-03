@@ -11,7 +11,7 @@ use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
 use function strtolower;
 
-function resolveName(
+function FQNOfName(
     Namespace_ $namespace,
     Int $type, $name,
     ?String $selfValue = NULL,
