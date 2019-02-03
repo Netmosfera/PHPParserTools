@@ -12,6 +12,7 @@ require(__DIR__ . "/src/Names/FQNOfBaseIdentifier.inc.php");
 require(__DIR__ . "/src/Names/FQNOfName.inc.php");
 require(__DIR__ . "/src/Names/isBaseIdentifierActuallyInUse.inc.php");
 require(__DIR__ . "/src/Names/isImplicitlyRelativeName.inc.php");
+require(__DIR__ . "/src/Names/nameClassConstantFetch.inc.php");
 require(__DIR__ . "/src/Names/normalizeFQNForComparison.inc.php");
 require(__DIR__ . "/src/Names/BaseIdentifiersExtractionFromNodes/constantBaseIdentifiersInNode.inc.php");
 require(__DIR__ . "/src/Names/BaseIdentifiersExtractionFromNodes/functionBaseIdentifiersInNode.inc.php");
