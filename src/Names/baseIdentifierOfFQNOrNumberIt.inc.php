@@ -2,9 +2,13 @@
 
 namespace Netmosfera\PHPParserTools\Names;
 
+use function array_unshift;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Namespace_;
 use function Netmosfera\PHPParserTools\isValidGlobalSymbolType;
 use function Netmosfera\PHPParserTools\Names\FQNToAndFromBaseIdentifierConversionInUses\FQNOfBaseIdentifierInUses;
+use PhpParser\Node\Stmt\Use_;
+use PhpParser\Node\Stmt\UseUse;
 use function strrpos;
 
 function baseIdentifierOfFQNOrNumberIt(
@@ -52,7 +56,12 @@ function baseIdentifierOfFQNOrNumberIt(
 
         // In both cases, if a conflict is found, try again with a different identifier
 
-        // Otherwise return the found identifier
+        // Otherwise return the found identifier; but before that, add the `use` to the
+        // document.
+
+        $newUseUse = new UseUse(new Name($FQN), $newBaseIdentifier);
+        $newUse = new Use_([$newUseUse], $type);
+        array_unshift($namespace->stmts, $newUse);
 
         break;
     }

@@ -2,22 +2,33 @@
 
 namespace Netmosfera\PHPParserToolsTests\Names;
 
-use function Netmosfera\PHPParserTools\Names\baseIdentifierOfFQNOrNumberIt as ff;
-use function Netmosfera\PHPParserToolsTests\parse;
 use PhpParser\Node\Stmt\Use_;
 use PHPUnit\Framework\TestCase;
+use function Netmosfera\PHPParserTools\Names\baseIdentifierOfFQNOrNumberIt;
+use function Netmosfera\PHPParserTools\Names\FQNToAndFromBaseIdentifierConversionInUses\baseIdentifierOfFQNInUses;
+use function Netmosfera\PHPParserToolsTests\parse;
 
 class baseIdentifierOfFQNOrNumberItTest extends TestCase
 {
+    const FN = Use_::TYPE_FUNCTION;
+
     function test_reuse_base_identifier(){
         $namespace = parse("<?php
             namespace Bar\\Baz;
             use function Baz\\Qux\\foo as boo;
         ")[0];
 
-        $identifier = ff($namespace, "Baz\\Qux\\foo", Use_::TYPE_FUNCTION);
+        $i = baseIdentifierOfFQNOrNumberIt($namespace, "Baz\\Qux\\foo", self::FN);
+        self::assertSame("boo", $i);
+    }
 
-        self::assertSame("boo", $identifier);
+    function test_namespace_relative(){
+        $namespace = parse("<?php
+            namespace Bar\\Baz;
+        ")[0];
+
+        $i = baseIdentifierOfFQNOrNumberIt($namespace, "Bar\\Baz\\foo", self::FN);
+        self::assertSame("foo", $i);
     }
 
     function test_generates_one_because_already_in_use_in_uses(){
@@ -28,21 +39,31 @@ class baseIdentifierOfFQNOrNumberItTest extends TestCase
             use function G\\H\\z as boo2;
         ")[0];
 
-        $identifier = ff($namespace, "X\\boo", Use_::TYPE_FUNCTION);
+        $i = baseIdentifierOfFQNInUses(self::FN, "X\\boo", $namespace);
+        self::assertSame(NULL, $i);
 
-        self::assertSame("boo3", $identifier);
+        $i = baseIdentifierOfFQNOrNumberIt($namespace, "X\\boo", self::FN);
+        self::assertSame("boo3", $i);
+
+        $i = baseIdentifierOfFQNInUses(self::FN, "X\\boo", $namespace);
+        self::assertSame("boo3", $i);
+
     }
 
     function test_generates_one_because_already_in_use_in_actual_usages(){
         $namespace = parse("<?php
             namespace A\\B;
-            
             boo(); boo1(); boo2();
         ")[0];
 
-        $identifier = ff($namespace, "X\\boo", Use_::TYPE_FUNCTION);
+        $i = baseIdentifierOfFQNInUses(self::FN, "X\\boo", $namespace);
+        self::assertSame(NULL, $i);
 
-        self::assertSame("boo3", $identifier);
+        $i = baseIdentifierOfFQNOrNumberIt($namespace, "X\\boo", self::FN);
+        self::assertSame("boo3", $i);
+
+        $i = baseIdentifierOfFQNInUses(self::FN, "X\\boo", $namespace);
+        self::assertSame("boo3", $i);
     }
 
 
@@ -51,8 +72,7 @@ class baseIdentifierOfFQNOrNumberItTest extends TestCase
             namespace A\\B;
         ")[0];
 
-        $identifier = ff($namespace, "X\\Y\\boo", Use_::TYPE_FUNCTION);
-
+        $identifier = baseIdentifierOfFQNOrNumberIt($namespace, "X\\Y\\boo", self::FN);
         self::assertSame("boo", $identifier);
     }
 }
