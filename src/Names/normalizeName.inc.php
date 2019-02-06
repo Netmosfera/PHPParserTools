@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Netmosfera\Opal\Preprocessors\VariantTypeDeclarations;
+namespace Netmosfera\PHPParserTools\Names;
 
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
