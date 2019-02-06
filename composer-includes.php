@@ -28,4 +28,5 @@ require(__DIR__ . "/src/Names/FQNToAndFromBaseIdentifierConversionInUses/FQNOfBa
 require(__DIR__ . "/src/Nodes/containsNode.inc.php");
 require(__DIR__ . "/src/Nodes/setParentNodes.inc.php");
 require(__DIR__ . "/src/Nodes/visitNodes.inc.php");
+require(__DIR__ . "/src/Nodes/visitNodes2.inc.php");
 require(__DIR__ . "/src/Variables/findUnusedVariable.inc.php");

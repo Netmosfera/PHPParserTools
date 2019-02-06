@@ -10,6 +10,8 @@ use PhpParser\NodeVisitorAbstract;
 /**
  * @TODOC
  *
+ * @deprecated      Deprecated in favor of {@see visitNodes2()}
+ *
  * @param           Node[] $nodes
  * `Array<Int, Node>`
  *
