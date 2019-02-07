@@ -42,13 +42,17 @@ function baseIdentifierOfFQN(Namespace_ $namespace, String $FQN, Int $type): ?St
     // Therefore, we can use basename($FQN) as identifier:
 
     $FQNLastSeparator = strrpos($FQN, "\\");
-    $FQNamespace = substr($FQN, 0, $FQNLastSeparator);
-    $newBaseIdentifier = substr($FQN, $FQNLastSeparator + 1);
-    if(
-        normalizeFQNForComparison($namespace->name->toString(), Use_::TYPE_NORMAL) ===
-        normalizeFQNForComparison($FQNamespace, Use_::TYPE_NORMAL)
-    ){
-        return $newBaseIdentifier;
+    if($FQNLastSeparator === FALSE && $namespace->name === NULL){
+        return $FQN;
+    }else{
+        $FQNamespace = substr($FQN, 0, $FQNLastSeparator);
+        $newBaseIdentifier = substr($FQN, $FQNLastSeparator + 1);
+        if(
+            normalizeFQNForComparison($namespace->name->toString(), Use_::TYPE_NORMAL) ===
+            normalizeFQNForComparison($FQNamespace, Use_::TYPE_NORMAL)
+        ){
+            return $newBaseIdentifier;
+        }
     }
 
     // Or else, there no existing base identifier usable:
