@@ -33,8 +33,11 @@ function baseIdentifierOfFQNOrNumberIt(
     $newBaseIdentifier = NULL;
     $count = 2;
     $lastSeparator = strrpos($FQN, "\\");
-    $lastSeparator = $lastSeparator === FALSE ? 0 : $lastSeparator;
-    $baseName = substr($FQN, $lastSeparator + 1);
+    if($lastSeparator === FALSE){
+        $baseName = $FQN;
+    }else{
+        $baseName = substr($FQN, $lastSeparator + 1);
+    }
 
     while(TRUE){
         if($newBaseIdentifier === NULL){
