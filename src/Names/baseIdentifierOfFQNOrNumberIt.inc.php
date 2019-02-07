@@ -42,8 +42,10 @@ function baseIdentifierOfFQNOrNumberIt(
     while(TRUE){
         if($newBaseIdentifier === NULL){
             $newBaseIdentifier = $baseName;
+            $isBaseName = TRUE;
         }else{
             $newBaseIdentifier = $baseName . $count++;
+            $isBaseName = FALSE;
         }
 
         // 1- there is no pre-existing `use function foo` or `use function bar as foo`
@@ -62,7 +64,7 @@ function baseIdentifierOfFQNOrNumberIt(
         // Otherwise return the found identifier; but before that, add the `use` to the
         // document.
 
-        $newUseUse = new UseUse(new Name($FQN), $newBaseIdentifier);
+        $newUseUse = new UseUse(new Name($FQN), $isBaseName ? NULL : $newBaseIdentifier);
         $newUse = new Use_([$newUseUse], $type);
         array_unshift($namespace->stmts, $newUse);
 
