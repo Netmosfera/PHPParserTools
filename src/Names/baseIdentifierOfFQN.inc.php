@@ -42,8 +42,8 @@ function baseIdentifierOfFQN(Namespace_ $namespace, String $FQN, Int $type): ?St
     // Therefore, we can use basename($FQN) as identifier:
 
     $FQNLastSeparator = strrpos($FQN, "\\");
-    if($FQNLastSeparator === FALSE && $namespace->name === NULL){
-        return $FQN;
+    if($FQNLastSeparator === FALSE){
+        return $namespace->name === NULL ? $FQN : NULL;
     }else{
         $FQNamespace = substr($FQN, 0, $FQNLastSeparator);
         $newBaseIdentifier = substr($FQN, $FQNLastSeparator + 1);
