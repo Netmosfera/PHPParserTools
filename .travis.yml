@@ -4,26 +4,37 @@ language: php
 
 matrix:
   include:
-    - name: '[UNIT] PHP With Locked Dependencies'
+    - name: '[UNIT] PHP 7.2'
       php: '7.2'
 
-    - name: '[UNIT] PHP With Lowest Dependencies'
+    - name: '[UNIT] PHP 7.2 With Lowest Dependencies'
       php: '7.2'
       env: dependencies=lowest
 
-    - name: '[UNIT] PHP With Highest Dependencies'
+    - name: '[UNIT] PHP 7.2 With Highest Dependencies'
       php: '7.2'
       env: dependencies=highest
 
-    - name: '[UNIT] PHP Nightly With Locked Dependencies'
-      php: nightly
+    - name: '[UNIT] PHP 7.3'
+      php: '7.3'
 
-    - name: '[UNIT] PHP Nightly With Highest Dependencies'
-      php: nightly
+    - name: '[UNIT] PHP 7.3 With Lowest Dependencies'
+      php: '7.3'
       env: dependencies=lowest
 
-    - name: '[UNIT] PHP Nightly With Lowest Dependencies'
-      php: nightly
+    - name: '[UNIT] PHP 7.3 With Highest Dependencies'
+      php: '7.3'
+      env: dependencies=highest
+
+    - name: '[UNIT] PHP 7.4'
+      php: '7.4'
+
+    - name: '[UNIT] PHP 7.4 With Lowest Dependencies'
+      php: '7.4'
+      env: dependencies=lowest
+
+    - name: '[UNIT] PHP 7.4 With Highest Dependencies'
+      php: '7.4'
       env: dependencies=highest
 
 install:
